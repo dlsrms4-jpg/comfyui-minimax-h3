@@ -67,6 +67,15 @@ install_node() {
 install_node "comfyui-deno-custom-nodes" "https://github.com/Deno2026/comfyui-deno-custom-nodes.git"
 install_node "ComfyUI-VideoHelperSuite" "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git"
 
+# sageattention (KJNodes의 PatchSageAttentionKJ 노드 의존성)
+if ! $VENV/bin/python -c "import sageattention" 2>/dev/null; then
+  echo "  sageattention: 설치 중..."
+  $VENV/bin/pip install sageattention -q 2>/dev/null
+  echo "  sageattention: 완료"
+else
+  echo "  sageattention: 이미 설치됨"
+fi
+
 # --- 4. 모델 파일 확인/다운로드 ---
 echo "[4/5] 모델 파일 확인..."
 MODELS_DIR="$COMFY_DIR/models"
