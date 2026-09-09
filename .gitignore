@@ -1,0 +1,13 @@
+# 모델 파일 (용량过大, GitHub 업로드 불가 — download_models.sh로 다운로드)
+*.safetensors
+*.ckpt
+*.pt
+*.pth
+*.gguf
+models/
+
+# RunPod 임시 파일
+.venv/
+__pycache__/
+*.pyc
+*.pyo
