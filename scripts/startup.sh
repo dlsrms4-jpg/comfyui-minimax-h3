@@ -15,7 +15,7 @@ set -euo pipefail
 COMFY_DIR="/workspace/runpod-slim/ComfyUI"
 REPO_DIR="/workspace/comfyui-minimax-h3"
 VENV="$COMFY_DIR/.venv-cu128"
-REQUIRED_VERSION="0.34.7"
+REQUIRED_VERSION="0.34.6"
 LOG="/tmp/startup-setup.log"
 
 exec > >(tee -a "$LOG") 2>&1
