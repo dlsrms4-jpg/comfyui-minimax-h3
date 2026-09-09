@@ -1,46 +1,84 @@
 #!/usr/bin/env bash
 # ============================================================
 # RunPod ComfyUI 원클릭 셋업 스크립트 (MiniMax H3 ref2va)
-# RunPod 템플릿 "RunPod ComfyUI" 기준 (ComfyUI가 $HOME/ComfyUI에 있음)
+#
+# RunPod 공식 ComfyUI 이미지 기준:
+#   ComfyUI = /workspace/runpod-slim/ComfyUI  (자동 감지)
 #
 # 사용법:
-#   bash runpod_setup.sh
-# 또는 저장소 클론 후:
 #   git clone https://github.com/dlsrms4-jpg/comfyui-minimax-h3.git
 #   bash comfyui-minimax-h3/scripts/runpod_setup.sh
 # ============================================================
 set -euo pipefail
 
-COMFYUI_DIR="${COMFYUI_DIR:-$HOME/ComfyUI}"
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-PY=python
-command -v python3 >/dev/null 2>&1 && PY=python3
 
-echo "########################################"
-echo "# 1/3 ComfyUI 최신 버전으로 업데이트"
-echo "########################################"
-if [[ -d "$COMFYUI_DIR/.git" ]]; then
-  git -C "$COMFYUI_DIR" pull --ff-only || echo "   (pull 실패 — 리베이스 등 로컬 변경 확인 필요)"
-  "$PY" -m pip install -r "$COMFYUI_DIR/requirements.txt" || true
-else
-  echo "!! $COMFYUI_DIR 에 ComfyUI가 없습니다. COMFYUI_DIR 환경변수로 경로를 지정하세요."
+# --- ComfyUI 경로 자동 감지 ---
+detect_comfyui_dir() {
+  for d in "${COMFYUI_DIR:-}" "/workspace/runpod-slim/ComfyUI" "/workspace/ComfyUI" "$HOME/ComfyUI"; do
+    if [[ -n "$d" && -d "$d" && -f "$d/main.py" ]]; then
+      echo "$d"
+      return 0
+    fi
+  done
+  echo ""
+}
+
+COMFYUI_DIR="$(detect_comfyui_dir)"
+if [[ -z "$COMFYUI_DIR" ]]; then
+  echo "!! ComfyUI 디렉토리를 찾지 못했습니다:"
+  ls -la /workspace 2>/dev/null || true
+  find / -maxdepth 3 -name "main.py" -path "*ComfyUI*" 2>/dev/null || true
   exit 1
 fi
 
+PY=python
+if [[ -x "$COMFYUI_DIR/.venv-cu128/bin/python" ]]; then
+  PY="$COMFYUI_DIR/.venv-cu128/bin/python"
+elif [[ -x "$COMFYUI_DIR/.venv/bin/python" ]]; then
+  PY="$COMFYUI_DIR/.venv/bin/python"
+elif command -v python3 >/dev/null 2>&1; then
+  PY=python3
+fi
+echo ">> ComfyUI 디렉토리: $COMFYUI_DIR"
+echo ">> Python: $PY"
+
 echo ""
 echo "########################################"
-echo "# 2/3 모델 다운로드 (약 40GB, 시간 소요)"
+echo "# 1/4 모델 다운로드 (~42GB, 시간 소요)"
 echo "########################################"
 bash "$REPO_ROOT/scripts/download_models.sh" "$COMFYUI_DIR/models"
 
 echo ""
 echo "########################################"
-echo "# 3/3 커스텀 노드 설치"
+echo "# 2/4 커스텀 노드 설치 (deno-custom-nodes, VHS)"
 echo "########################################"
-bash "$REPO_ROOT/scripts/install_nodes.sh" "$COMFYUI_DIR/custom_nodes"
+bash "$REPO_ROOT/scripts/install_nodes.sh" "$COMFYUI_DIR"
 
 echo ""
 echo "########################################"
-echo "# 완료! RunPod에서 ComfyUI 재시작 후"
-echo "# workflows/minimax_h3_ref2va_acc_multiref_audio.json 불러오기"
+echo "# 3/4 워크플로우 배치"
+echo "########################################"
+mkdir -p "$COMFYUI_DIR/user/default/workflows"
+cp "$REPO_ROOT/workflows/minimax_h3_ref2va_acc_multiref_audio.json" \
+   "$COMFYUI_DIR/user/default/workflows/"
+echo ">> workflows/minimax_h3_ref2va_acc_multiref_audio.json 복사 완료"
+
+echo ""
+echo "########################################"
+echo "# 4/4 ComfyUI 재시작"
+echo "########################################"
+# RunPod 이미지의 프로세스 관리자로 재시작 시도
+if command -v supervisorctl >/dev/null 2>&1 && supervisorctl status comfyui >/dev/null 2>&1; then
+  supervisorctl restart comfyui || true
+else
+  pkill -f "main.py" || true
+  echo "   (재시작 시도됨 — 30초 내 자동 복구되는지 확인)"
+fi
+
+echo ""
+echo "########################################"
+echo "# 완료!"
+echo "# ComfyUI 접속: RunPod 콘솔 → Connect → HTTP 8188"
+echo "# 워크플로우: Workflows 패널 또는 드래그앤드롭"
 echo "########################################"
