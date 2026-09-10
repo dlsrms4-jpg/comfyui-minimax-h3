@@ -1,0 +1,477 @@
+{
+  "id": "974a8e8a-73e2-4af9-91a5-e5b3957642b1",
+  "revision": 0,
+  "last_node_id": 7,
+  "last_link_id": 5,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "VHS_VideoCombine",
+      "pos": [
+        4375.143931159007,
+        5122.278899786015
+      ],
+      "size": [
+        226.5576171875,
+        334
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 1
+        },
+        {
+          "name": "audio",
+          "shape": 7,
+          "type": "AUDIO",
+          "link": 2
+        },
+        {
+          "name": "meta_batch",
+          "shape": 7,
+          "type": "VHS_BatchManager",
+          "link": null
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "Filenames",
+          "type": "VHS_FILENAMES",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-videohelpersuite",
+        "ver": "4ee72c065db22c9d96c2427954dc69e7b908444b",
+        "Node name for S&R": "VHS_VideoCombine",
+        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite"
+      },
+      "widgets_values": {
+        "frame_rate": 24,
+        "loop_count": 0,
+        "filename_prefix": "AnimateDiff",
+        "format": "video/h264-mp4",
+        "pix_fmt": "yuv420p",
+        "crf": 19,
+        "save_metadata": true,
+        "trim_to_audio": false,
+        "pingpong": false,
+        "save_output": true,
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "filename": "AnimateDiff_00014-audio.mp4",
+            "subfolder": "",
+            "type": "output",
+            "format": "video/h264-mp4",
+            "frame_rate": 24,
+            "workflow": "AnimateDiff_00014.png",
+            "fullpath": "E:\\ComfyUI\\ComfyUI-Easy-Install\\ComfyUI-Easy-Install\\ComfyUI\\output\\AnimateDiff_00014-audio.mp4"
+          }
+        }
+      },
+      "widgets_values_named": {
+        "frame_rate": 24,
+        "loop_count": 0,
+        "filename_prefix": "AnimateDiff",
+        "format": "video/h264-mp4",
+        "pix_fmt": "yuv420p",
+        "crf": 19,
+        "save_metadata": true,
+        "trim_to_audio": false,
+        "pingpong": false,
+        "save_output": true,
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "filename": "AnimateDiff_00014-audio.mp4",
+            "subfolder": "",
+            "type": "output",
+            "format": "video/h264-mp4",
+            "frame_rate": 24,
+            "workflow": "AnimateDiff_00014.png",
+            "fullpath": "E:\\ComfyUI\\ComfyUI-Easy-Install\\ComfyUI-Easy-Install\\ComfyUI\\output\\AnimateDiff_00014-audio.mp4"
+          }
+        }
+      }
+    },
+    {
+      "id": 2,
+      "type": "UpscaleModelLoader",
+      "pos": [
+        4049.936028496118,
+        5339.137432378455
+      ],
+      "size": [
+        282.06852480290763,
+        60.0114208004843
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "UPSCALE_MODEL",
+          "type": "UPSCALE_MODEL",
+          "links": [
+            4
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.30.0",
+        "Node name for S&R": "UpscaleModelLoader"
+      },
+      "widgets_values": [
+        "realesr-animevideov3.pth"
+      ],
+      "widgets_values_named": {
+        "model_name": "realesr-animevideov3.pth"
+      }
+    },
+    {
+      "id": 3,
+      "type": "MarkdownNote",
+      "pos": [
+        3901.0089227705485,
+        5479.582558147259
+      ],
+      "size": [
+        428.11145681197956,
+        134.70283428753646
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "## Upscale Model Downloads\n** Ani Upscale: RealESR AnimeVideoV3**\n[Download realesr-animevideov3.pth](https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.5.0/realesr-animevideov3.pth)\n\n** General upscale : RealESRGAN x2plus**\n[Download RealESRGAN_x2plus.pth](https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.1/RealESRGAN_x2plus.pth)\n\n\n\n\n\n→ put it in `ComfyUI/models/upscale_models/`\n\n\nOpenModelDB — https://openmodeldb.info\n"
+      ],
+      "widgets_values_named": {
+        "text": "## Upscale Model Downloads\n** Ani Upscale: RealESR AnimeVideoV3**\n[Download realesr-animevideov3.pth](https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.5.0/realesr-animevideov3.pth)\n\n** General upscale : RealESRGAN x2plus**\n[Download RealESRGAN_x2plus.pth](https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.1/RealESRGAN_x2plus.pth)\n\n\n\n\n\n→ put it in `ComfyUI/models/upscale_models/`\n\n\nOpenModelDB — https://openmodeldb.info\n"
+      },
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 5,
+      "type": "MarkdownNote",
+      "pos": [
+        3480.5566194294624,
+        5482.800164411006
+      ],
+      "size": [
+        307.3696878584077,
+        147.46415946149136
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "## RTX Refiner\n\n🎮🎮[Deblur tutorial watch video](https://youtu.be/1KgDAXLi4ws)"
+      ],
+      "widgets_values_named": {
+        "text": "## RTX Refiner\n\n🎮🎮[Deblur tutorial watch video](https://youtu.be/1KgDAXLi4ws)"
+      },
+      "color": "#432",
+      "bgcolor": "#653"
+    },
+    {
+      "id": 6,
+      "type": "ImageUpscaleWithModel",
+      "pos": [
+        4072.642795272757,
+        5120.564986741094
+      ],
+      "size": [
+        233.5689453125,
+        46
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "upscale_model",
+          "type": "UPSCALE_MODEL",
+          "link": 4
+        },
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 3
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            1
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.30.0",
+        "Node name for S&R": "ImageUpscaleWithModel"
+      }
+    },
+    {
+      "id": 7,
+      "type": "VHS_LoadVideo",
+      "pos": [
+        3186.905484808232,
+        5122.317067516223
+      ],
+      "size": [
+        261.6533203125,
+        479.0984043413561
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "meta_batch",
+          "shape": 7,
+          "type": "VHS_BatchManager",
+          "link": null
+        },
+        {
+          "name": "vae",
+          "shape": 7,
+          "type": "VAE",
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            3
+          ]
+        },
+        {
+          "name": "frame_count",
+          "type": "INT",
+          "links": null
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "links": [
+            2
+          ]
+        },
+        {
+          "name": "video_info",
+          "type": "VHS_VIDEOINFO",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfyui-videohelpersuite",
+        "ver": "4ee72c065db22c9d96c2427954dc69e7b908444b",
+        "Node name for S&R": "VHS_LoadVideo",
+        "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite"
+      },
+      "widgets_values": {
+        "video": "aoi_hangar_ref2va_1mp_10s_00003-audio.mp4",
+        "force_rate": 0,
+        "custom_width": 0,
+        "custom_height": 0,
+        "frame_load_cap": 0,
+        "skip_first_frames": 0,
+        "select_every_nth": 1,
+        "format": "AnimateDiff",
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "filename": "aoi_hangar_ref2va_1mp_10s_00003-audio.mp4",
+            "type": "input",
+            "format": "video/mp4",
+            "force_rate": 0,
+            "custom_width": 0,
+            "custom_height": 0,
+            "frame_load_cap": 0,
+            "skip_first_frames": 0,
+            "select_every_nth": 1
+          }
+        }
+      },
+      "widgets_values_named": {
+        "video": "aoi_hangar_ref2va_1mp_10s_00003-audio.mp4",
+        "force_rate": 0,
+        "custom_width": 0,
+        "custom_height": 0,
+        "frame_load_cap": 0,
+        "skip_first_frames": 0,
+        "select_every_nth": 1,
+        "format": "AnimateDiff",
+        "choose video to upload": null,
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "filename": "aoi_hangar_ref2va_1mp_10s_00003-audio.mp4",
+            "type": "input",
+            "format": "video/mp4",
+            "force_rate": 0,
+            "custom_width": 0,
+            "custom_height": 0,
+            "frame_load_cap": 0,
+            "skip_first_frames": 0,
+            "select_every_nth": 1
+          }
+        }
+      }
+    },
+    {
+      "id": 4,
+      "type": "DenoRTXVFXEasyUpscale",
+      "pos": [
+        3475.303474796021,
+        5125.2886244371075
+      ],
+      "size": [
+        560,
+        310
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 4,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 3
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": []
+        }
+      ],
+      "properties": {
+        "cnr_id": "deno-custom-nodes",
+        "ver": "0.7.77",
+        "Node name for S&R": "DenoRTXVFXEasyUpscale",
+        "aux_id": "Deno2026/comfyui-deno-custom-nodes"
+      },
+      "widgets_values": [
+        "Denoise Ultra",
+        "",
+        "Same Size",
+        2,
+        2,
+        1920,
+        1080,
+        "1",
+        0,
+        "16:9",
+        "Center Crop (Fill)"
+      ],
+      "widgets_values_named": {
+        "mode": "Denoise Ultra",
+        "rtx_vfx_controls": "",
+        "resize_type": "Same Size",
+        "scale": 2,
+        "megapixels": 2,
+        "width": 1920,
+        "height": 1080,
+        "divisible_by": "1",
+        "device": 0,
+        "ratio_preset": "16:9",
+        "resize_method": "Center Crop (Fill)"
+      }
+    }
+  ],
+  "links": [
+    [
+      1,
+      6,
+      0,
+      1,
+      0,
+      "IMAGE"
+    ],
+    [
+      2,
+      7,
+      2,
+      1,
+      1,
+      "AUDIO"
+    ],
+    [
+      3,
+      7,
+      0,
+      6,
+      0,
+      "IMAGE"
+    ],
+    [
+      4,
+      2,
+      0,
+      6,
+      0,
+      "UPSCALE_MODEL"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 2,
+      "title": "# Step1 (Upscale)",
+      "bounding": [
+        3176.905484808232,
+        4933.6616084389625,
+        1459.8058646950153,
+        717.1306187064847
+      ],
+      "color": "#3f789e",
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 1.232630607368681,
+      "offset": [
+        -3080.81568089148,
+        -4765.910464284699
+      ]
+    },
+    "frontendVersion": "1.49.6",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}
